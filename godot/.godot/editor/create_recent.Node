@@ -1,0 +1,12 @@
+StaticBody3D
+CollisionShape3D
+MeshInstance3D
+DirectionalLight3D
+TouchScreenButton
+Control
+TextureRect
+WorldEnvironment
+Camera3D
+CanvasLayer
+SubViewport
+CharacterBody3D

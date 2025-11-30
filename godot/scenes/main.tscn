@@ -1,0 +1,66 @@
+[gd_scene load_steps=8 format=3 uid="uid://155xx7s6y6ta"]
+
+[ext_resource type="PackedScene" uid="uid://8sxnguyilb4o" path="res://scenes/players_vr.tscn" id="1_o5qli"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_o5qli"]
+sky_top_color = Color(0.53144294, 0.76316375, 1, 1)
+sky_horizon_color = Color(0.4474222, 0.75264996, 0.9948837, 1)
+ground_bottom_color = Color(0.9724392, 0.9633375, 0.9533767, 1)
+
+[sub_resource type="Sky" id="Sky_0wfyh"]
+sky_material = SubResource("ProceduralSkyMaterial_o5qli")
+
+[sub_resource type="Environment" id="Environment_sugp2"]
+background_mode = 2
+sky = SubResource("Sky_0wfyh")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_choun"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o5qli"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_o5qli"]
+
+[node name="main" type="Node3D"]
+
+[node name="Players_VR" parent="." instance=ExtResource("1_o5qli")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.07245356, 4.20942, -0.021555007)
+top_level = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_sugp2")
+
+[node name="-x" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.8901809, 0, -0.45560718, 0, 1, 0, 0.45560718, 0, 0.8901809, -8.06883, 0.952, 0)
+mesh = SubResource("CylinderMesh_choun")
+skeleton = NodePath("../floor/floor")
+
+[node name="z" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.98694026, 0, -0.16108677, 0, 1, 0, 0.16108677, 0, 0.98694026, 0.054688632, 0.952, 8.113051)
+mesh = SubResource("CylinderMesh_choun")
+skeleton = NodePath("../x")
+
+[node name="x" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.40386486, 0, 0.9148187, 0, 1, 0, -0.9148187, 0, -0.40386486, 8.152883, 0.952, -0.031813383)
+mesh = SubResource("CylinderMesh_choun")
+skeleton = NodePath("../-z")
+
+[node name="-z" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.54595566, 0, -0.8378141, 0, 1, 0, 0.8378141, 0, -0.54595566, 0, 0.9519117, -8.155844)
+mesh = SubResource("CylinderMesh_choun")
+
+[node name="floor" type="StaticBody3D" parent="."]
+transform = Transform3D(50.050865, 0, 0, 0, 25, 0, 0, 0, 49.874844, 0, -12.4227495, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0)
+shape = SubResource("BoxShape3D_o5qli")
+
+[node name="floor" type="MeshInstance3D" parent="floor"]
+transform = Transform3D(0.49949187, 0, 0, 0, 1, 0, 0, 0, 0.5012547, 0, 0.49690998, 0)
+mesh = SubResource("PlaneMesh_o5qli")
+skeleton = NodePath("../..")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.68602157, 0.7275812, 0, -0.7275812, 0.68602157, 0, 4.8211374, 0)
+light_color = Color(1, 0.934364, 0.8843804, 1)
+light_energy = 2.0

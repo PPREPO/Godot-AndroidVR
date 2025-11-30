@@ -1,0 +1,73 @@
+[gd_scene load_steps=9 format=3 uid="uid://8sxnguyilb4o"]
+
+[ext_resource type="Script" uid="uid://imlwkh0plsv2" path="res://scripts/players_vr.gd" id="1_6py00"]
+[ext_resource type="Shader" uid="uid://cfvdy1myf8a8c" path="res://shaders/lens.gdshader" id="2_6py00"]
+[ext_resource type="Script" uid="uid://wbag5bid5oaf" path="res://scripts/vr_eyes_socket.gd" id="2_q3sgk"]
+[ext_resource type="Texture2D" uid="uid://cor6pk54f56e0" path="res://resources/images/BG.png" id="3_4vn6a"]
+[ext_resource type="Texture2D" uid="uid://ne3vh7q25gck" path="res://resources/images/centered.png" id="5_irmjl"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ebgbs"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6py00"]
+shader = ExtResource("2_6py00")
+shader_parameter/k1 = -0.22
+shader_parameter/k2 = 0.24
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_ebgbs"]
+viewport_path = NodePath("eyes_sockets")
+
+[node name="Players_VR" type="CharacterBody3D"]
+script = ExtResource("1_6py00")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_ebgbs")
+
+[node name="display" type="CanvasLayer" parent="."]
+
+[node name="VR-Eyes-Socket" type="Control" parent="display"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_q3sgk")
+
+[node name="Bg" type="TextureRect" parent="display/VR-Eyes-Socket"]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("3_4vn6a")
+
+[node name="left" type="TextureRect" parent="display/VR-Eyes-Socket"]
+material = SubResource("ShaderMaterial_6py00")
+layout_mode = 0
+offset_left = -900.0
+offset_top = -900.0
+offset_right = 124.0
+offset_bottom = 124.0
+scale = Vector2(1.025, 1.025)
+texture = SubResource("ViewportTexture_ebgbs")
+
+[node name="Right" type="TextureRect" parent="display/VR-Eyes-Socket"]
+material = SubResource("ShaderMaterial_6py00")
+layout_mode = 0
+offset_left = -900.0
+offset_top = -900.0
+offset_right = 124.0
+offset_bottom = 124.0
+scale = Vector2(1.025, 1.025)
+texture = SubResource("ViewportTexture_ebgbs")
+
+[node name="CenteredButton" type="TouchScreenButton" parent="display/VR-Eyes-Socket"]
+scale = Vector2(0.2, 0.2)
+texture_normal = ExtResource("5_irmjl")
+
+[node name="head_controls" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="eyes_sockets" type="SubViewport" parent="."]
+size = Vector2i(1024, 1024)
+
+[node name="VR_viewport" type="Camera3D" parent="eyes_sockets"]
+fov = 50.0
+
+[connection signal="pressed" from="display/VR-Eyes-Socket/CenteredButton" to="." method="_on_centered_button_pressed"]
