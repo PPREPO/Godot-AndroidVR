@@ -1,6 +1,8 @@
+res://scripts/player/
+res://scenes/main/materials/
+res://autoloads/
 res://
-res://resources/images
-res://shaders
-res://autoloads
-res://scripts
-res://scenes
+res://resources/images/
+res://shaders/
+res://scripts/
+res://scenes/
